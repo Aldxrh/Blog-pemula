@@ -1,90 +1,44 @@
-:root {
-  --primary: #2196f3;
-  --bg-start: #0f2027;
-  --bg-end: #203a43;
-  --text: #f0f0f0;
-  --card-bg: rgba(255,255,255,0.06);
-}
-
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, var(--bg-start), var(--bg-end));
+* {
   margin: 0;
   padding: 0;
-  color: var(--text);
-  min-height: 100vh;
+  box-sizing: border-box;
 }
-
-header {
-  background: linear-gradient(to right, #2196f3, #0f2027);
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #000000, #0d47a1);
   color: white;
-  padding: 30px 20px;
+  line-height: 1.6;
+  padding: 20px;
+}
+header {
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  padding: 20px 0;
 }
-
-main {
-  padding: 20px;
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
 }
-
-.blog-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.card {
-  background-color: var(--card-bg);
-  padding: 20px;
-  border-radius: 12px;
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  transition: transform 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-}
-
-.card h2 {
-  margin-top: 0;
-  color: var(--primary);
-}
-
-.card a {
-  color: #90caf9;
+nav a {
+  color: white;
+  margin: 0 15px;
   text-decoration: none;
   font-weight: bold;
 }
-
+nav a:hover {
+  text-decoration: underline;
+}
+section {
+  margin: 40px 0;
+}
+.card {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+}
 footer {
   text-align: center;
-  padding: 15px;
-  font-size: 14px;
-  background: rgba(0,0,0,0.3);
-  margin-top: 30px;
+  margin-top: 40px;
+  font-size: 0.9rem;
   color: #ccc;
-}
-form input, form textarea {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1em;
-}
-
-form button {
-  background-color: var(--primary);
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-form button:hover {
-  opacity: 0.9;
 }
