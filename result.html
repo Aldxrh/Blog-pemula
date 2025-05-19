@@ -1,53 +1,16 @@
-<!DOCTYPE html>
-<html lang="id">
+<!<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Hasil Kuis</title>
-  <style>
-    body { font-family: sans-serif; background: #111; color: white; padding: 20px; }
-    table { width: 100%; margin-top: 20px; border-collapse: collapse; }
-    th, td { border: 1px solid #555; padding: 8px; text-align: center; }
-  </style>
+  <title>Hasil</title>
 </head>
 <body>
   <h2>Hasil Kuis</h2>
-  <p id="result"></p>
-  <h3>Leaderboard</h3>
-  <table>
-    <thead>
-      <tr><th>Nama</th><th>Bidang</th><th>Skor</th></tr>
-    </thead>
-    <tbody id="leaderboard"></tbody>
-  </table>
+  <p id="hasil"></p>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    const supabase = supabase.createClient('https://uqwmxfrzzmkfjwbmdlmj.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo');
-
-    const params = new URLSearchParams(location.search);
-    const name = params.get('name');
-    const score = params.get('score');
-    const category = params.get('category');
-
-    document.getElementById('result').textContent = `${name}, kamu mendapatkan skor ${score} pada bidang ${category.toUpperCase()}`;
-
-    async function loadLeaderboard() {
-      const { data, error } = await supabase
-        .from('scores')
-        .select('*')
-        .eq('category', category)
-        .order('score', { ascending: false })
-        .limit(10);
-
-      const tbody = document.getElementById('leaderboard');
-      data.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${row.name}</td><td>${row.category}</td><td>${row.score}</td>`;
-        tbody.appendChild(tr);
-      });
-    }
-
-    loadLeaderboard();
+    const nama = localStorage.getItem("nama");
+    const nilai = localStorage.getItem("nilai");
+    document.getElementById("hasil").innerText = `${nama}, skor kamu: ${nilai}`;
   </script>
 </body>
 </html>

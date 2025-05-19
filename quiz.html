@@ -1,59 +1,34 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Kuis</title>
-  <style>
-    body { font-family: sans-serif; background: #222; color: white; padding: 20px; }
-    .question { margin-bottom: 20px; }
-    button { margin-top: 20px; padding: 10px 20px; }
-  </style>
+  <title>Quiz</title>
 </head>
 <body>
-  <h2>Kuis Cerdas Cermat</h2>
-  <div id="quiz-container"></div>
-  <input type="text" id="name" placeholder="Nama lengkap" />
-  <button onclick="submitQuiz()">Kirim Jawaban</button>
+  <h2>Masukkan Nama</h2>
+  <input type="text" id="nama" placeholder="Nama lengkap" />
+  
+  <h2>Soal:</h2>
+  <p>1. Ibu kota Indonesia adalah?</p>
+  <input type="radio" name="q1" value="Jakarta" /> Jakarta<br />
+  <input type="radio" name="q1" value="Bandung" /> Bandung<br />
+  <button onclick="submitQuiz()">Kirim</button>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    const supabase = supabase.createClient('https://uqwmxfrzzmkfjwbmdlmj.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo');
+    function submitQuiz() {
+      const nama = document.getElementById("nama").value;
+      const jawaban = document.querySelector('input[name="q1"]:checked');
 
-    const questions = {
-      ipa: [
-        { q: "Air terdiri dari unsur...", a: "H2O", options: ["CO2", "H2O", "O2", "HCl"] },
-        { q: "Benda cair bentuknya...", a: "Menyesuaikan wadah", options: ["Tetap", "Mudah pecah", "Menyesuaikan wadah", "Cair terus"] }
-      ],
-      ips: [
-        { q: "Ibukota Indonesia?", a: "Jakarta", options: ["Bandung", "Surabaya", "Medan", "Jakarta"] },
-        { q: "Benua terbesar?", a: "Asia", options: ["Afrika", "Australia", "Asia", "Eropa"] }
-      ]
-    };
+      if (!nama || !jawaban) {
+        alert("Harap isi nama dan jawaban!");
+        return;
+      }
 
-    const category = new URLSearchParams(location.search).get('category') || 'ipa';
-    const quiz = questions[category];
-    const answers = [];
+      // Simpan data ke localStorage (sementara)
+      localStorage.setItem("nama", nama);
+      localStorage.setItem("nilai", jawaban.value === "Jakarta" ? 1 : 0);
 
-    const container = document.getElementById('quiz-container');
-    quiz.forEach((q, i) => {
-      const div = document.createElement('div');
-      div.className = 'question';
-      div.innerHTML = `<p>${i + 1}. ${q.q}</p>` +
-        q.options.map(opt => `<label><input type="radio" name="q${i}" value="${opt}"> ${opt}</label><br>`).join('');
-      container.appendChild(div);
-    });
-
-    async function submitQuiz() {
-      const name = document.getElementById('name').value.trim();
-      if (!name) return alert('Masukkan nama dulu!');
-      let score = 0;
-      quiz.forEach((q, i) => {
-        const selected = document.querySelector(`input[name="q${i}"]:checked`);
-        if (selected && selected.value === q.a) score++;
-      });
-
-      await supabase.from('scores').insert([{ name, category, score }]);
-      window.location.href = `result.html?name=${name}&score=${score}&category=${category}`;
+      // Pindah ke halaman hasil
+      window.location.href = "result.html";
     }
   </script>
 </body>
