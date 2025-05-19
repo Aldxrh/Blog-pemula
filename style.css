@@ -1,44 +1,37 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, #000000, #0d47a1);
-  color: white;
-  line-height: 1.6;
-  padding: 20px;
-}
-header {
-  text-align: center;
-  padding: 20px 0;
-}
-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-}
-nav a {
-  color: white;
-  margin: 0 15px;
-  text-decoration: none;
-  font-weight: bold;
-}
-nav a:hover {
-  text-decoration: underline;
-}
-section {
-  margin: 40px 0;
-}
-.card {
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 20px;
-  margin: 20px 0;
-  border-radius: 10px;
-}
-footer {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 0.9rem;
-  color: #ccc;
-}
+/* style.css */ 
+body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0a0f1c, #131e30, #1a2c40); color: #e0e0e0; transition: background 1s ease-in-out; }
+
+header { background-color: rgba(0, 0, 0, 0.6); padding: 30px 20px; text-align: center; animation: fadeDown 1s ease; }
+
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+header h1 { margin: 0; font-size: 2.2em; color: #56c8e5; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+
+nav { margin-top: 10px; animation: fadeIn 1.5s ease; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+nav a { color: #e0e0e0; text-decoration: none; margin: 0 12px; padding: 10px 18px; border-radius: 5px; background-color: rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
+
+nav a:hover { background-color: #56c8e5; color: #0a0f1c; }
+
+main { padding: 30px 20px; max-width: 900px; margin: auto; animation: fadeIn 1.5s ease; }
+
+.intro h2 { font-size: 1.9em; color: #56c8e5; margin-bottom: 15px; }
+
+.btn { display: inline-block; background-color: #56c8e5; color: #0a0f1c; padding: 12px 22px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: 20px; transition: background-color 0.3s ease, transform 0.3s; }
+
+.btn:hover { background-color: #3aa9c7; transform: scale(1.05); }
+
+.fakta-list { list-style: none; padding: 0; }
+
+.fakta-list li { background-color: rgba(255, 255, 255, 0.04); margin: 15px 0; padding: 18px; border-radius: 10px; transition: transform 0.3s, background-color 0.4s; cursor: pointer; }
+
+.fakta-list li:hover { background-color: rgba(255, 255, 255, 0.08); transform: translateX(10px); }
+
+.fakta-list a { color: #56c8e5; text-decoration: none; font-size: 1.15em; font-weight: 500; }
+
+footer { text-align: center; padding: 20px; background-color: rgba(0, 0, 0, 0.7); color: #888; margin-top: 50px; font-size: 0.9em; animation: fadeIn 2s ease; }
+
+@media screen and (max-width: 600px) { header h1 { font-size: 1.6em; } nav a { margin: 5px; padding: 8px 12px; } }
+

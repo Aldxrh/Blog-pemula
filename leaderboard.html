@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Leaderboard - Riyadul Muna</title>
+</head>
+<body>
+  <h2>Leaderboard Siswa</h2>
+  <ul id="data"></ul>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const supabase = createClient('https://PROJECT_URL.supabase.co', 'PUBLIC_ANON_KEY');
+
+    const { data } = await supabase.from('scores').select('*').order('nilai', { ascending: false });
+
+    const list = document.getElementById('data');
+    data.forEach(d => {
+      const item = document.createElement('li');
+      item.textContent = `${d.nama} (${d.kelas}) - ${d.nilai} poin`;
+      list.appendChild(item);
+    });
+  </script>
+</body>
+</html>

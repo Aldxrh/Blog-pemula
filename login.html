@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Riyadul Muna</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); color: #fff; }
+    input, button { padding: 10px; margin: 10px; border-radius: 8px; border: none; }
+  </style>
+</head>
+<body>
+  <h2>Login Siswa</h2>
+  <input type="text" id="nama" placeholder="Nama Lengkap"><br>
+  <input type="text" id="kelas" placeholder="Kelas"><br>
+  <button onclick="login()">Masuk</button>
+
+  <script>
+    function login() {
+      const nama = document.getElementById('nama').value;
+      const kelas = document.getElementById('kelas').value;
+      if (nama && kelas) {
+        localStorage.setItem('nama', nama);
+        localStorage.setItem('kelas', kelas);
+        location.href = 'index.html';
+      } else {
+        alert("Isi nama dan kelas!");
+      }
+    }
+  </script>
+</body>
+</html>

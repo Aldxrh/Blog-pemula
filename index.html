@@ -1,42 +1,30 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Blog Keren</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Riyadul Muna - Cerdas Cermat</title>
+  <style>
+    body { font-family: sans-serif; background: linear-gradient(to right, #0f2027, #203a43, #2c5364); color: white; text-align: center; padding: 40px; }
+    select, button { padding: 10px; margin-top: 20px; }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Blog Keren</h1>
-    <p>Dibuat dari HP dengan cinta dan semangat</p>
-  </header>
+  <h1>Selamat Datang di Kuis Riyadul Muna</h1>
+  <p>Pilih bidang untuk memulai kuis:</p>
+  <select id="category">
+    <option value="ipa">IPA</option>
+    <option value="ips">IPS</option>
+    <option value="agama">Agama</option>
+    <option value="olahraga">Olahraga</option>
+    <option value="sejarah">Sejarah</option>
+  </select><br>
+  <button onclick="startQuiz()">Mulai</button>
 
-  <main>
-    <section class="blog-list">
-      <article class="card">
-        <h2>Tips Belajar HTML</h2>
-        <p>HTML adalah pondasi setiap website. Yuk mulai dari dasar-dasarnya.</p>
-        <a href="detail.html">Baca selengkapnya</a>
-      </article>
-
-      <article class="card">
-        <h2>Mengenal CSS</h2>
-        <p>CSS mempercantik tampilan web. Dari warna, ukuran, sampai animasi.</p>
-        <a href="detail.html">Baca selengkapnya</a>
-      </article>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Blog Keren by Saya</p>
-  </footer>
-
-  <script src="script.js"></script>
-  <article class="card">
-  <h2>Belajar JavaScript</h2>
-  <p>JavaScript bikin website jadi hidup dan interaktif.</p>
-  <a href="detail2.html">Baca selengkapnya</a>
-</article>
+  <script>
+    function startQuiz() {
+      const category = document.getElementById('category').value;
+      window.location.href = `quiz.html?category=${category}`;
+    }
+  </script>
 </body>
 </html>

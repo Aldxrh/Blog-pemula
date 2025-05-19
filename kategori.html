@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pilih Bidang</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(to right, #0a0f1c, #131e30);
+      color: white;
+      text-align: center;
+      padding: 50px;
+    }
+    .btn {
+      display: inline-block;
+      margin: 15px;
+      padding: 12px 25px;
+      font-size: 18px;
+      background: #56c8e5;
+      color: black;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="judul">Pilih Bidang</h1>
+  <div id="buttons"></div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const tingkat = params.get("tingkat");
+    const bidang = ["IPA", "IPS", "Agama"];
+    document.getElementById("judul").textContent = "Pilih Bidang untuk " + tingkat.toUpperCase();
+
+    const btnContainer = document.getElementById("buttons");
+    bidang.forEach(b => {
+      const link = document.createElement("a");
+      link.href = `quiz.html?tingkat=${tingkat}&bidang=${b.toLowerCase()}`;
+      link.className = "btn";
+      link.textContent = b;
+      btnContainer.appendChild(link);
+    });
+  </script>
+</body>
+</html>

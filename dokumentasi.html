@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Dokumentasi - Riyadul Muna</title>
+</head>
+<body>
+  <h2>Dokumentasi Aktivitas Siswa</h2>
+  <table border="1">
+    <thead>
+      <tr><th>Nama</th><th>Kelas</th><th>Nilai</th><th>Tanggal</th></tr>
+    </thead>
+    <tbody id="data"></tbody>
+  </table>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const supabase = createClient('https://PROJECT_URL.supabase.co', 'PUBLIC_ANON_KEY');
+
+    const { data } = await supabase.from('scores').select('*').order('tanggal', { ascending: false });
+
+    const tbody = document.getElementById('data');
+    data.forEach(d => {
+      const row = document.createElement('tr');
+      row.innerHTML = `<td>${d.nama}</td><td>${d.kelas}</td><td>${d.nilai}</td><td>${d.tanggal}</td>`;
+      tbody.appendChild(row);
+    });
+  </script>
+</body>
+</html>
