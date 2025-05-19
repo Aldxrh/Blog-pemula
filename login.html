@@ -6,50 +6,79 @@
   <title>Login Siswa - Riyadul Muna</title>
   <style>
     body {
-      font-family: Arial;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #0f172a, #1e293b);
       color: white;
       text-align: center;
       padding: 50px;
     }
+    .login-box {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      display: inline-block;
+    }
     input, button {
       padding: 10px;
-      margin: 10px;
-      border-radius: 5px;
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: none;
+    }
+    input {
+      background-color: #fff;
+      color: #000;
+    }
+    button {
+      background-color: #38bdf8;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0ea5e9;
     }
   </style>
 </head>
-<script src="login.js"></script>
 <body>
-  <h2>Login Siswa</h2>
-  <input type="text" id="nama" placeholder="Nama Lengkap" />
-  <br />
-  <button onclick="login()">Masuk</button>
+  <div class="login-box">
+    <h2>Masuk Sebagai Siswa</h2>
+    <input type="text" id="nama" placeholder="Nama Lengkap" required>
+    <button onclick="login()">Masuk</button>
+  </div>
 
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/dist/umd/supabase.min.js"></script>
 
-    const supabaseUrl = 'https://uqwmxfrzzmkfjwbmdlmj.supabase.co'
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo'
-    const supabase = createClient(supabaseUrl, supabaseKey)
+  <script>
+    const supabase = supabase.createClient(
+      "https://uqwmxfrzzmkfjwbmdlmj.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo"
+    );
 
     async function login() {
-      const nama = document.getElementById("nama").value
+      const nama = document.getElementById("nama").value.trim();
+
       if (!nama) {
-        alert("Nama wajib diisi")
-        return
+        alert("Nama wajib diisi!");
+        return;
       }
 
-      const { data, error } = await supabase
-        .from('siswa')
-        .insert([{ nama }])
+      // Simpan ke localStorage
+      localStorage.setItem("siswa_nama", nama);
+
+      // Simpan ke Supabase (tabel siswa)
+      const { error } = await supabase
+        .from("siswa")
+        .insert([{ nama }]);
 
       if (error) {
-        alert("Gagal login: " + error.message)
-      } else {
-        localStorage.setItem("siswa_nama", nama)
-        window.location.href = "quiz.html"
+        alert("Gagal menyimpan ke Supabase:\n" + error.message);
+        return;
       }
+
+      // Lanjut ke halaman kuis
+      window.location.href = "quiz.html";
     }
   </script>
 </body>
