@@ -1,16 +1,54 @@
-<!<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="id">
 <head>
+  <meta charset="UTF-8" />
   <title>Hasil</title>
+  <style>
+    body { background: #111; color: #fff; text-align: center; padding: 50px; }
+  </style>
 </head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/dist/umd/supabase.min.js"></script>
+<script>
+  const supabaseUrl = 'https://uqwmxfrzzmkfjwbmdlmj.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo';
+  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+</script>
 <body>
-  <h2>Hasil Kuis</h2>
-  <p id="hasil"></p>
+  <h1>Hasil Kuis</h1>
+  <p id="output"></p>
 
   <script>
-    const nama = localStorage.getItem("nama");
-    const nilai = localStorage.getItem("nilai");
-    document.getElementById("hasil").innerText = `${nama}, skor kamu: ${nilai}`;
+    const params = new URLSearchParams(window.location.search);
+    const nama = params.get('nama');
+    const skor = localStorage.getItem('skor_' + nama);
+    document.getElementById('output').textContent = `${nama}, skor kamu: ${skor}`;
   </script>
+  <h2>Leaderboard</h2>
+<ul id="leaderboard"></ul>
+
+<script>
+  async function tampilkanLeaderboard() {
+    const { data, error } = await supabase
+      .from('hasil_kuis')
+      .select('*')
+      .order('skor', { ascending: false })
+      .limit(10);
+
+    const list = document.getElementById("leaderboard");
+    list.innerHTML = "";
+
+    if (data) {
+      data.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.nama}: ${item.skor} poin`;
+        list.appendChild(li);
+      });
+    } else {
+      list.innerHTML = "Gagal menampilkan leaderboard.";
+    }
+  }
+
+  tampilkanLeaderboard();
+</script>
 </body>
 </html>

@@ -1,26 +1,79 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Leaderboard - Riyadul Muna</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leaderboard Riyadul Muna</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      padding: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: rgba(255,255,255,0.1);
+    }
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background-color: rgba(255,255,255,0.2);
+    }
+  </style>
 </head>
 <body>
-  <h2>Leaderboard Siswa</h2>
-  <ul id="data"></ul>
+  <h2>Leaderboard Cerdas Cermat - Riyadul Muna</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nama</th>
+        <th>Skor</th>
+      </tr>
+    </thead>
+    <tbody id="tabelLeaderboard"></tbody>
+  </table>
 
   <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-    const supabase = createClient('https://PROJECT_URL.supabase.co', 'PUBLIC_ANON_KEY');
+    const supabaseUrl = 'https://uqwmxfrzzmkfjwbmdlmj.supabase.co'
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo'
+    const supabase = createClient(supabaseUrl, supabaseKey)
 
-    const { data } = await supabase.from('scores').select('*').order('nilai', { ascending: false });
+    async function loadLeaderboard() {
+      const { data, error } = await supabase
+        .from('hasil_kuis')
+        .select('*')
+        .order('skor', { ascending: false })
 
-    const list = document.getElementById('data');
-    data.forEach(d => {
-      const item = document.createElement('li');
-      item.textContent = `${d.nama} (${d.kelas}) - ${d.nilai} poin`;
-      list.appendChild(item);
-    });
+      const tbody = document.getElementById("tabelLeaderboard")
+      tbody.innerHTML = ""
+
+      if (error) {
+        tbody.innerHTML = "<tr><td colspan='2'>Gagal memuat data</td></tr>"
+        return
+      }
+
+      data.forEach(item => {
+        const row = document.createElement("tr")
+        row.innerHTML = `
+          <td>${item.nama}</td>
+          <td>${item.skor}</td>
+        `
+        tbody.appendChild(row)
+      })
+    }
+
+    loadLeaderboard()
+
+    // Update otomatis setiap 15 detik (opsional)
+    setInterval(loadLeaderboard, 15000)
   </script>
 </body>
 </html>

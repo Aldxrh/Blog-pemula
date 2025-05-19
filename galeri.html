@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Galeri Dokumentasi</title>
+  <style>
+    body {
+      background: #0d1117;
+      color: #fff;
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    h1 { text-align: center; }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.7);
+    }
+  </style>
+</head>
+<body>
+  <h1>Dokumentasi Siswa</h1>
+  <div class="gallery">
+    <img src="galeri/1.jpg" alt="Dokumentasi 1">
+    <img src="galeri/2.jpg" alt="Dokumentasi 2">
+    <!-- Tambahkan lebih banyak -->
+  </div>
+</body>
+</html>

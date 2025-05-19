@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pilih Bidang Kuis</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+    h1 { text-align: center; }
+    .quiz-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    a {
+      padding: 15px;
+      border-radius: 10px;
+      background: #222;
+      color: #0ff;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+    }
+    a:hover {
+      background: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pilih Bidang Kuis</h1>
+  <div class="quiz-list">
+    <a href="quiz.html?bidang=tajwid">Tajwid</a>
+    <a href="quiz.html?bidang=safinah">Safinatun Naja</a>
+    <a href="quiz.html?bidang=nahwu">Nahwu (Jurumiyyah)</a>
+    <a href="quiz.html?bidang=akhlak">Akhlakul Lilbanin</a>
+  </div>
+</body>
+</html>

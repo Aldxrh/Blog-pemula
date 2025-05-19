@@ -2,28 +2,52 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Login - Riyadul Muna</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Siswa - Riyadul Muna</title>
   <style>
-    body { font-family: sans-serif; text-align: center; background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); color: #fff; }
-    input, button { padding: 10px; margin: 10px; border-radius: 8px; border: none; }
+    body {
+      font-family: Arial;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      text-align: center;
+      padding: 50px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+    }
   </style>
 </head>
 <body>
   <h2>Login Siswa</h2>
-  <input type="text" id="nama" placeholder="Nama Lengkap"><br>
-  <input type="text" id="kelas" placeholder="Kelas"><br>
+  <input type="text" id="nama" placeholder="Nama Lengkap" />
+  <br />
   <button onclick="login()">Masuk</button>
 
-  <script>
-    function login() {
-      const nama = document.getElementById('nama').value;
-      const kelas = document.getElementById('kelas').value;
-      if (nama && kelas) {
-        localStorage.setItem('nama', nama);
-        localStorage.setItem('kelas', kelas);
-        location.href = 'index.html';
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+    const supabaseUrl = 'https://uqwmxfrzzmkfjwbmdlmj.supabase.co'
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo'
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
+    async function login() {
+      const nama = document.getElementById("nama").value
+      if (!nama) {
+        alert("Nama wajib diisi")
+        return
+      }
+
+      const { data, error } = await supabase
+        .from('siswa')
+        .insert([{ nama }])
+
+      if (error) {
+        alert("Gagal login: " + error.message)
       } else {
-        alert("Isi nama dan kelas!");
+        localStorage.setItem("siswa_nama", nama)
+        window.location.href = "quiz.html"
       }
     }
   </script>
