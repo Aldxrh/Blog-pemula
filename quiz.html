@@ -20,33 +20,26 @@
     }
   </style>
 </head>
-<!-- Tambahkan Supabase JS -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/dist/umd/supabase.min.js"></script>
-<script>
-  // Ganti dengan URL dan API Key dari Supabase kamu
-  const supabaseUrl = 'https://uqwmxfrzzmkfjwbmdlmj.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo';
-  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-</script>
 <body>
   <h2>Kuis Cerdas Cermat - Riyadul Muna</h2>
   <div id="quizContainer"></div>
   <button onclick="kirimJawaban()">Kirim Jawaban</button>
 
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/dist/umd/supabase.min.js"></script>
 
-    const supabaseUrl = 'https://uqwmxfrzzmkfjwbmdlmj.supabase.co'
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo'
-    const supabase = createClient(supabaseUrl, supabaseKey)
+  <script>
+    const supabase = supabase.createClient(
+      'https://uqwmxfrzzmkfjwbmdlmj.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo'
+    );
 
-    const siswaNama = localStorage.getItem("siswa_nama")
+    const siswaNama = localStorage.getItem("siswa_nama");
     if (!siswaNama) {
-      alert("Silakan login terlebih dahulu.")
-      window.location.href = "login.html"
+      alert("Silakan login terlebih dahulu.");
+      window.location.href = "login.html";
     }
 
-    // Contoh soal kuis
     const soal = [
       {
         pertanyaan: "Apa hukum membaca Basmallah sebelum wudhu?",
@@ -58,45 +51,42 @@
         pilihan: ["Tajwid", "Fiqih", "Akhlak"],
         benar: 1
       }
-    ]
+    ];
 
-    let skor = 0
-
-    const quizContainer = document.getElementById("quizContainer")
     soal.forEach((item, index) => {
-      const div = document.createElement("div")
-      div.className = "soal"
-      div.innerHTML = `<p>${index + 1}. ${item.pertanyaan}</p>`
+      const div = document.createElement("div");
+      div.className = "soal";
+      div.innerHTML = `<p>${index + 1}. ${item.pertanyaan}</p>`;
 
       item.pilihan.forEach((pil, i) => {
         div.innerHTML += `
           <label class="pilihan">
             <input type="radio" name="soal${index}" value="${i}" /> ${pil}
           </label>
-        `
-      })
+        `;
+      });
 
-      quizContainer.appendChild(div)
-    })
+      document.getElementById("quizContainer").appendChild(div);
+    });
 
     async function kirimJawaban() {
-      skor = 0
+      let skor = 0;
       soal.forEach((item, index) => {
-        const jawaban = document.querySelector(`input[name=soal${index}]:checked`)
+        const jawaban = document.querySelector(`input[name=soal${index}]:checked`);
         if (jawaban && parseInt(jawaban.value) === item.benar) {
-          skor++
+          skor++;
         }
-      })
+      });
 
       const { error } = await supabase
-        .from('hasil_kuis')
-        .insert([{ nama: siswaNama, skor }])
+        .from("hasil_kuis")
+        .insert([{ nama: siswaNama, skor }]);
 
       if (error) {
-        alert("Gagal kirim skor: " + error.message)
+        alert("Gagal kirim skor: " + error.message);
       } else {
-        alert("Skor berhasil dikirim!")
-        window.location.href = "leaderboard.html"
+        alert("Skor berhasil dikirim!");
+        window.location.href = "leaderboard.html";
       }
     }
   </script>
