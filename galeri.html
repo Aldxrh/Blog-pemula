@@ -1,35 +1,42 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Galeri Dokumentasi</title>
+  <meta charset="UTF-8" />
+  <title>Galeri - Riyadul Muna</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />
   <style>
     body {
       background: #0d1117;
       color: #fff;
-      font-family: sans-serif;
-      padding: 20px;
+      font-family: 'Poppins', sans-serif;
+      padding: 30px 20px;
     }
-    h1 { text-align: center; }
+    h1 {
+      text-align: center;
+    }
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 15px;
       margin-top: 20px;
     }
-    img {
+    .gallery a img {
       width: 100%;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.7);
     }
   </style>
 </head>
 <body>
-  <h1>Dokumentasi Siswa</h1>
+  <h1>Galeri Dokumentasi</h1>
   <div class="gallery">
+  <a href="galeri/1.jpg" data-lightbox="galeri" data-title="Dokumentasi 1">
     <img src="galeri/1.jpg" alt="Dokumentasi 1">
+  </a>
+  <a href="galeri/2.jpg" data-lightbox="galeri" data-title="Dokumentasi 2">
     <img src="galeri/2.jpg" alt="Dokumentasi 2">
-    <!-- Tambahkan lebih banyak -->
-  </div>
+  </a>
+  <!-- Tambah foto lain -->
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 </body>
 </html>

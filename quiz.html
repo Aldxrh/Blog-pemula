@@ -22,14 +22,22 @@
 </head>
 <body>
   <h2>Kuis Cerdas Cermat - Riyadul Muna</h2>
-  <div id="quizContainer"></div>
-  <button onclick="kirimJawaban()">Kirim Jawaban</button>
+
+  <label for="kategori">Pilih Materi:</label>
+  <select id="kategori">
+    <option value="tajwid">Tajwid</option>
+    <!-- Nanti tambah safinah, nahwu, akhlak -->
+  </select>
+  <button onclick="mulaiKuis()">Mulai Kuis</button>
+
+  <div id="quizContainer" style="margin-top:20px;"></div>
+  <button id="kirimBtn" style="display:none;" onclick="kirimJawaban()">Kirim Jawaban</button>
 
   <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/dist/umd/supabase.min.js"></script>
 
   <script>
-    const supabase = supabase.createClient(
+    const db = supabase.createClient(
       'https://uqwmxfrzzmkfjwbmdlmj.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo'
     );
@@ -40,37 +48,108 @@
       window.location.href = "login.html";
     }
 
-    const soal = [
-      {
-        pertanyaan: "Apa hukum membaca Basmallah sebelum wudhu?",
-        pilihan: ["Wajib", "Sunnah", "Makruh"],
-        benar: 1
-      },
-      {
-        pertanyaan: "Kitab Safinatun Naja membahas tentang...",
-        pilihan: ["Tajwid", "Fiqih", "Akhlak"],
-        benar: 1
+    const semuaSoal = {
+      tajwid: [
+        {
+          pertanyaan: "Apa hukum bacaan nun sukun bertemu dengan huruf ب?",
+          pilihan: ["Idzhar", "Iqlab", "Ikhfa", "Idgham"],
+          benar: 1
+        },
+        {
+          pertanyaan: "Berapa harakat panjang bacaan mad thabi'i?",
+          pilihan: ["1 harakat", "2 harakat", "4 harakat", "6 harakat"],
+          benar: 1
+        },
+        {
+          pertanyaan: "Huruf qalqalah ada berapa?",
+          pilihan: ["3 huruf", "4 huruf", "5 huruf", "6 huruf"],
+          benar: 2
+        },
+        {
+          pertanyaan: "Contoh huruf tafkhim adalah...",
+          pilihan: ["س", "ص", "ز", "ف"],
+          benar: 1
+        },
+        {
+          pertanyaan: "Hukum mim sukun bertemu mim disebut...",
+          pilihan: ["Ikhfa", "Idgham Mimi", "Idzhar Syafawi", "Qalqalah"],
+          benar: 1
+        },
+        {
+          pertanyaan: "Huruf Ikhfa berjumlah...",
+          pilihan: ["10 huruf", "12 huruf", "15 huruf", "17 huruf"],
+          benar: 2
+        },
+        {
+          pertanyaan: "Mad wajib muttashil terjadi saat...",
+          pilihan: [
+            "Mad bertemu tasydid",
+            "Mad bertemu huruf mati",
+            "Mad bertemu hamzah dalam satu kata",
+            "Mad bertemu huruf Qalqalah"
+          ],
+          benar: 2
+        },
+        {
+          pertanyaan: "Apa bacaan nun sukun bertemu huruf ر?",
+          pilihan: ["Idgham Bighunnah", "Idgham Bilaghunnah", "Ikhfa", "Idzhar"],
+          benar: 1
+        },
+        {
+          pertanyaan: "Mad arid lissukun dibaca panjang karena...",
+          pilihan: [
+            "Ada huruf tasydid",
+            "Karena waqaf",
+            "Karena huruf qalqalah",
+            "Karena tanwin"
+          ],
+          benar: 1
+        },
+        {
+          pertanyaan: "Huruf qalqalah adalah...",
+          pilihan: ["ق ط ب ج د", "خ ص ض غ ط", "ز ذ ر د ت", "ي ن م و"],
+          benar: 0
+        }
+      ]
+    };
+
+    let soal = [];
+
+    function mulaiKuis() {
+      const kategori = document.getElementById("kategori").value;
+      soal = semuaSoal[kategori];
+
+      if (!soal || soal.length === 0) {
+        alert("Soal belum tersedia.");
+        return;
       }
-    ];
 
-    soal.forEach((item, index) => {
-      const div = document.createElement("div");
-      div.className = "soal";
-      div.innerHTML = `<p>${index + 1}. ${item.pertanyaan}</p>`;
+      document.getElementById("quizContainer").innerHTML = "";
+      document.getElementById("kirimBtn").style.display = "block";
 
-      item.pilihan.forEach((pil, i) => {
-        div.innerHTML += `
-          <label class="pilihan">
-            <input type="radio" name="soal${index}" value="${i}" /> ${pil}
-          </label>
-        `;
+      soal.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "soal";
+        div.innerHTML = `<p>${index + 1}. ${item.pertanyaan}</p>`;
+
+        item.pilihan.forEach((pil, i) => {
+          div.innerHTML += `
+            <label class="pilihan">
+              <input type="radio" name="soal${index}" value="${i}" /> ${pil}
+            </label>
+          `;
+        });
+
+        document.getElementById("quizContainer").appendChild(div);
       });
 
-      document.getElementById("quizContainer").appendChild(div);
-    });
+      localStorage.setItem("kategori_kuis", kategori);
+    }
 
     async function kirimJawaban() {
       let skor = 0;
+      const kategori = localStorage.getItem("kategori_kuis");
+
       soal.forEach((item, index) => {
         const jawaban = document.querySelector(`input[name=soal${index}]:checked`);
         if (jawaban && parseInt(jawaban.value) === item.benar) {
@@ -78,9 +157,9 @@
         }
       });
 
-      const { error } = await supabase
-        .from("hasil_kuis")
-        .insert([{ nama: siswaNama, skor }]);
+      const { error } = await db
+      .from("hasil_kuis")
+        .insert([{ nama: siswaNama, skor, kategori }]);
 
       if (error) {
         alert("Gagal kirim skor: " + error.message);

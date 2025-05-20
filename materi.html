@@ -2,41 +2,64 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Materi - Riyadul Muna</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
+      font-family: 'Poppins', sans-serif;
       background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
       color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      padding: 20px;
+      padding: 30px 20px;
     }
+
     h1 {
       text-align: center;
+      margin-bottom: 30px;
     }
-    ul {
-      list-style: none;
-      padding: 0;
+
+    .materi-list {
+      max-width: 600px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
-    li {
-      background: rgba(255,255,255,0.1);
-      margin: 10px 0;
-      padding: 15px;
+
+    .materi {
+      background-color: rgba(255, 255, 255, 0.06);
+      padding: 15px 20px;
       border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s ease;
     }
-    a {
-      color: #00ffff;
+
+    .materi:hover {
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .materi i {
+      margin-right: 10px;
+      color: #38bdf8;
+    }
+
+    .materi a {
       text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      flex-grow: 1;
     }
   </style>
 </head>
 <body>
-  <h1>Materi Pelajaran</h1>
-  <ul>
-    <li><a href="materi/tajwid.html">Tajwid</a></li>
-    <li><a href="materi/safinah.html">Kitab Safinatun Naja</a></li>
-    <li><a href="materi/nahwu.html">Ilmu Nahwu (Jurumiyyah)</a></li>
-    <li><a href="materi/akhlak.html">Akhlakul Lilbanin</a></li>
-  </ul>
+  <h1>Daftar Materi</h1>
+  <div class="materi-list">
+    <div class="materi"><i class="fas fa-book"></i><a href="materi/tajwid.html">Tajwid</a></div>
+    <div class="materi"><i class="fas fa-book"></i><a href="materi/safinah.html">Kitab Safinatun Naja</a></div>
+    <div class="materi"><i class="fas fa-book"></i><a href="materi/nahwu.html">Ilmu Nahwu (Jurumiyyah)</a></div>
+    <div class="materi"><i class="fas fa-book"></i><a href="materi/akhlak.html">Akhlakul Lilbanin</a></div>
+  </div>
 </body>
 </html>
