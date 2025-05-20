@@ -7,17 +7,21 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #0f172a, #1e293b);
+      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
       color: white;
-      text-align: center;
-      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
     .login-box {
-      background-color: rgba(255, 255, 255, 0.05);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
     }
     input, button {
       padding: 10px;
@@ -42,8 +46,8 @@
 </head>
 <body>
   <div class="login-box">
-    <h2>Masuk Sebagai Siswa</h2>
-    <input type="text" id="nama" placeholder="Nama Lengkap" required />
+    <h2>Masuk sebagai Siswa</h2>
+    <input type="text" id="nama" placeholder="Nama Lengkap" />
     <button id="btnMasuk">Masuk</button>
   </div>
 
@@ -51,9 +55,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/dist/umd/supabase.min.js"></script>
 
   <script>
-    const supabase = supabase.createClient(
-      "https://uqwmxfrzzmkfjwbmdlmj.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo"
+    const db = supabase.createClient(
+      'https://uqwmxfrzzmkfjwbmdlmj.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo'
     );
 
     document.getElementById("btnMasuk").addEventListener("click", async () => {
@@ -62,16 +66,15 @@
 
       localStorage.setItem("siswa_nama", nama);
 
-      const { error } = await supabase
+      const { error } = await db
         .from("siswa")
         .insert([{ nama }]);
 
       if (error) {
-        alert("Gagal menyimpan ke Supabase:\n" + error.message);
-        return;
+        alert("Gagal menyimpan: " + error.message);
+      } else {
+        window.location.href = "quiz.html";
       }
-
-      window.location.href = "quiz.html";
     });
   </script>
 </body>
