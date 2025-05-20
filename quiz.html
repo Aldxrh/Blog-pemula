@@ -25,9 +25,11 @@
 
   <label for="kategori">Pilih Materi:</label>
   <select id="kategori">
-    <option value="tajwid">Tajwid</option>
-    <!-- Nanti tambah safinah, nahwu, akhlak -->
-  </select>
+  <option value="tajwid">Tajwid</option>
+  <option value="safinah">Safinatun Naja</option>
+  <option value="nahwu">Nahwu (Jurumiyyah)</option>
+  <option value="akhlak">Akhlakul Lilbanin</option>
+</select>
   <button onclick="mulaiKuis()">Mulai Kuis</button>
 
   <div id="quizContainer" style="margin-top:20px;"></div>
@@ -49,69 +51,55 @@
     }
 
     const semuaSoal = {
-      tajwid: [
-        {
-          pertanyaan: "Apa hukum bacaan nun sukun bertemu dengan huruf ب?",
-          pilihan: ["Idzhar", "Iqlab", "Ikhfa", "Idgham"],
-          benar: 1
-        },
-        {
-          pertanyaan: "Berapa harakat panjang bacaan mad thabi'i?",
-          pilihan: ["1 harakat", "2 harakat", "4 harakat", "6 harakat"],
-          benar: 1
-        },
-        {
-          pertanyaan: "Huruf qalqalah ada berapa?",
-          pilihan: ["3 huruf", "4 huruf", "5 huruf", "6 huruf"],
-          benar: 2
-        },
-        {
-          pertanyaan: "Contoh huruf tafkhim adalah...",
-          pilihan: ["س", "ص", "ز", "ف"],
-          benar: 1
-        },
-        {
-          pertanyaan: "Hukum mim sukun bertemu mim disebut...",
-          pilihan: ["Ikhfa", "Idgham Mimi", "Idzhar Syafawi", "Qalqalah"],
-          benar: 1
-        },
-        {
-          pertanyaan: "Huruf Ikhfa berjumlah...",
-          pilihan: ["10 huruf", "12 huruf", "15 huruf", "17 huruf"],
-          benar: 2
-        },
-        {
-          pertanyaan: "Mad wajib muttashil terjadi saat...",
-          pilihan: [
-            "Mad bertemu tasydid",
-            "Mad bertemu huruf mati",
-            "Mad bertemu hamzah dalam satu kata",
-            "Mad bertemu huruf Qalqalah"
-          ],
-          benar: 2
-        },
-        {
-          pertanyaan: "Apa bacaan nun sukun bertemu huruf ر?",
-          pilihan: ["Idgham Bighunnah", "Idgham Bilaghunnah", "Ikhfa", "Idzhar"],
-          benar: 1
-        },
-        {
-          pertanyaan: "Mad arid lissukun dibaca panjang karena...",
-          pilihan: [
-            "Ada huruf tasydid",
-            "Karena waqaf",
-            "Karena huruf qalqalah",
-            "Karena tanwin"
-          ],
-          benar: 1
-        },
-        {
-          pertanyaan: "Huruf qalqalah adalah...",
-          pilihan: ["ق ط ب ج د", "خ ص ض غ ط", "ز ذ ر د ت", "ي ن م و"],
-          benar: 0
-        }
-      ]
-    };
+  tajwid: [
+    { pertanyaan: "Apa hukum bacaan nun sukun bertemu dengan huruf ب?", pilihan: ["Idzhar", "Iqlab", "Ikhfa", "Idgham"], benar: 1 },
+    { pertanyaan: "Berapa harakat panjang bacaan mad thabi'i?", pilihan: ["1 harakat", "2 harakat", "4 harakat", "6 harakat"], benar: 1 },
+    { pertanyaan: "Huruf qalqalah ada berapa?", pilihan: ["3 huruf", "4 huruf", "5 huruf", "6 huruf"], benar: 2 },
+    { pertanyaan: "Contoh huruf tafkhim adalah...", pilihan: ["س", "ص", "ز", "ف"], benar: 1 },
+    { pertanyaan: "Hukum mim sukun bertemu mim disebut...", pilihan: ["Ikhfa", "Idgham Mimi", "Idzhar Syafawi", "Qalqalah"], benar: 1 },
+    { pertanyaan: "Huruf Ikhfa berjumlah...", pilihan: ["10 huruf", "12 huruf", "15 huruf", "17 huruf"], benar: 2 },
+    { pertanyaan: "Mad wajib muttashil terjadi saat...", pilihan: ["Mad bertemu tasydid", "Mad bertemu huruf mati", "Mad bertemu hamzah dalam satu kata", "Mad bertemu huruf Qalqalah"], benar: 2 },
+    { pertanyaan: "Apa bacaan nun sukun bertemu huruf ر?", pilihan: ["Idgham Bighunnah", "Idgham Bilaghunnah", "Ikhfa", "Idzhar"], benar: 1 },
+    { pertanyaan: "Mad arid lissukun dibaca panjang karena...", pilihan: ["Ada huruf tasydid", "Karena waqaf", "Karena huruf qalqalah", "Karena tanwin"], benar: 1 },
+    { pertanyaan: "Huruf qalqalah adalah...", pilihan: ["ق ط ب ج د", "خ ص ض غ ط", "ز ذ ر د ت", "ي ن م و"], benar: 0 }
+  ],
+  safinah: [
+    { pertanyaan: "Berapa jumlah rukun Islam?", pilihan: ["3", "4", "5", "6"], benar: 2 },
+    { pertanyaan: "Apa saja syarat sah wudhu?", pilihan: ["Islam, Niat, Air", "Islam, Tamyiz, Air suci, Tidak ada penghalang", "Menutup aurat, Niat, Waktu sholat", "Air suci, Tamyiz, Niat"], benar: 1 },
+    { pertanyaan: "Berapa jumlah fardhu wudhu menurut Safinah?", pilihan: ["4", "5", "6", "7"], benar: 2 },
+    { pertanyaan: "Yang termasuk fardhu sholat adalah...", pilihan: ["Menutup aurat, Takbiratul ihram, Tasyahud akhir", "Wudhu, Niat, Salam", "Takbiratul ihram, Rukuk, Baca Al-Fatihah", "Takbir, Rukuk, Zikir"], benar: 2 },
+    { pertanyaan: "Yang membatalkan sholat adalah...", pilihan: ["Bicara, Bergerak banyak, Kentut", "Bersin, Menguap, Tidur", "Menangis, Melihat jam, Menguap", "Batuk, Menyentuh baju, Bergerak sedikit"], benar: 0 },
+    { pertanyaan: "Air musta’mal adalah...", pilihan: ["Air suci dan menyucikan", "Air yang tidak sah untuk wudhu", "Air yang berubah warna", "Air najis"], benar: 1 },
+    { pertanyaan: "Najis ringan disebut juga...", pilihan: ["Najis mukhaffafah", "Najis mutawassitah", "Najis mughalazah", "Najis najisah"], benar: 0 },
+    { pertanyaan: "Najis berat seperti anjing dan babi disebut...", pilihan: ["Mutawassitah", "Mughalazah", "Mukhaffafah", "Najis Ma’nawiyah"], benar: 1 },
+    { pertanyaan: "Air yang tidak bisa digunakan untuk wudhu karena najis disebut...", pilihan: ["Musta’mal", "Mughalazah", "Najis", "Mutanajjis"], benar: 3 },
+    { pertanyaan: "Wajib taat kepada orang tua selama...", pilihan: ["Mereka senang", "Perintahnya bukan maksiat", "Tidak sibuk belajar", "Selalu benar"], benar: 1 }
+  ],
+  nahwu: [
+    { pertanyaan: "Apa yang dimaksud dengan 'isim' dalam nahwu?", pilihan: ["Kata kerja", "Kata benda", "Kata sifat", "Huruf"], benar: 1 },
+    { pertanyaan: "Kalimat yang menunjukkan waktu atau keadaan disebut?", pilihan: ["Fi’il", "Isim", "Harf", "Jumlah"], benar: 0 },
+    { pertanyaan: "Berapa macam tanda i’rab utama?", pilihan: ["2", "3", "4", "5"], benar: 2 },
+    { pertanyaan: "Contoh huruf jar adalah...", pilihan: ["من", "ذهب", "رجل", "نائم"], benar: 0 },
+    { pertanyaan: "Apa arti 'raf’' dalam i’rab?", pilihan: ["Kasrah", "Fathah", "Dhammah", "Sukun"], benar: 2 },
+    { pertanyaan: "Fa’il (pelaku) dalam kalimat biasanya dibaca?", pilihan: ["Nashab", "Jarr", "Jazm", "Raf’"], benar: 3 },
+    { pertanyaan: "Apa itu mabni?", pilihan: ["Perubahan akhir kata", "Kata yang akhirannya tetap", "Kata kerja", "Huruf sambung"], benar: 1 },
+    { pertanyaan: "Jumlah ismiyah terdiri dari...", pilihan: ["Fi’il dan Fa’il", "Mubtada dan Khabar", "Fi’il dan Maful", "Harf dan Isim"], benar: 1 },
+    { pertanyaan: "Yang bukan termasuk huruf i’rab adalah...", pilihan: ["Min", "Ila", "Zaid", "Ala"], benar: 2 },
+    { pertanyaan: "Jumlah fi’liyah diawali oleh...", pilihan: ["Isim", "Fi’il", "Harf", "Khabar"], benar: 1 }
+  ],
+  akhlak: [
+    { pertanyaan: "Apa arti akhlak dalam Islam?", pilihan: ["Ilmu", "Perilaku", "Tauhid", "Fikih"], benar: 1 },
+    { pertanyaan: "Berbakti kepada orang tua disebut juga...", pilihan: ["Jujur", "Amanah", "Birrul Walidain", "Ta’awun"], benar: 2 },
+    { pertanyaan: "Apa yang harus dilakukan jika salah kepada teman?", pilihan: ["Membalas", "Diam", "Meminta maaf", "Melupakan"], benar: 2 },
+    { pertanyaan: "Amanah berarti...", pilihan: ["Rajin", "Sopan", "Bertanggung jawab", "Bersih"], benar: 2 },
+    { pertanyaan: "Sikap hemat dan tidak boros termasuk...", pilihan: ["Sombong", "Tawadhu", "Qana’ah", "Israf"], benar: 2 },
+    { pertanyaan: "Sikap memaafkan termasuk akhlak...", pilihan: ["Buruk", "Sopan", "Terpuji", "Tercela"], benar: 2 },
+    { pertanyaan: "Apa lawan dari jujur?", pilihan: ["Sabar", "Bohong", "Adil", "Bersih"], benar: 1 },
+    { pertanyaan: "Adab makan yang benar adalah...", pilihan: ["Makan sambil berdiri", "Mengucap bismillah", "Mengambil milik teman", "Melempar makanan"], benar: 1 },
+    { pertanyaan: "Akhlak kepada guru harus...", pilihan: ["Dibantah", "Didengarkan", "Dicueki", "Diabaikan"], benar: 1 },
+    { pertanyaan: "Sikap baik dalam berteman adalah...", pilihan: ["Iri", "Hasad", "Tawadhu", "Berbohong"], benar: 2 }
+  ]
+};
 
     let soal = [];
 

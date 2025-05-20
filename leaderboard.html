@@ -3,77 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Leaderboard Riyadul Muna</title>
+  <title>Leaderboard - Riyadul Muna</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      font-family: 'Poppins', sans-serif;
+      background: #0f172a;
       color: white;
-      padding: 20px;
+      padding: 30px;
+      text-align: center;
     }
     table {
       width: 100%;
+      max-width: 700px;
+      margin: auto;
       border-collapse: collapse;
       margin-top: 20px;
-      background-color: rgba(255,255,255,0.1);
     }
     th, td {
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-      text-align: left;
+      padding: 12px;
+      border: 1px solid #334155;
     }
     th {
-      background-color: rgba(255,255,255,0.2);
+      background-color: #1e293b;
+    }
+    tr:nth-child(even) {
+      background-color: #1e293b;
+    }
+    tr:nth-child(odd) {
+      background-color: #0f172a;
+    }
+    p.keterangan {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-top: 15px;
     }
   </style>
 </head>
 <body>
-  <h2>Leaderboard Cerdas Cermat - Riyadul Muna</h2>
+
+  <h2>Leaderboard Siswa</h2>
   <table>
     <thead>
       <tr>
         <th>Nama</th>
+        <th>Kategori</th>
         <th>Skor</th>
       </tr>
     </thead>
     <tbody id="tabelLeaderboard"></tbody>
   </table>
 
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+  <p class="keterangan">*Leaderboard diperbarui otomatis setiap 5 detik</p>
 
-    const supabaseUrl = 'https://uqwmxfrzzmkfjwbmdlmj.supabase.co'
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo'
-    const supabase = createClient(supabaseUrl, supabaseKey)
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/dist/umd/supabase.min.js"></script>
+  <script>
+    const db = supabase.createClient(
+      'https://uqwmxfrzzmkfjwbmdlmj.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo'
+    );
 
-    async function loadLeaderboard() {
-      const { data, error } = await supabase
+    async function muatDataLeaderboard() {
+      const { data, error } = await db
         .from('hasil_kuis')
         .select('*')
-        .order('skor', { ascending: false })
+        .order('skor', { ascending: false });
 
-      const tbody = document.getElementById("tabelLeaderboard")
-      tbody.innerHTML = ""
+      const tbody = document.getElementById("tabelLeaderboard");
+      tbody.innerHTML = "";
 
-      if (error) {
-        tbody.innerHTML = "<tr><td colspan='2'>Gagal memuat data</td></tr>"
-        return
+      if (data) {
+        data.forEach((item) => {
+          const row = `<tr>
+            <td>${item.nama}</td>
+            <td>${item.kategori || '-'}</td>
+            <td>${item.skor}</td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
       }
-
-      data.forEach(item => {
-        const row = document.createElement("tr")
-        row.innerHTML = `
-          <td>${item.nama}</td>
-          <td>${item.skor}</td>
-        `
-        tbody.appendChild(row)
-      })
     }
 
-    loadLeaderboard()
-
-    // Update otomatis setiap 15 detik (opsional)
-    setInterval(loadLeaderboard, 15000)
+    muatDataLeaderboard(); // saat pertama dibuka
+    setInterval(muatDataLeaderboard, 5000); // refresh tiap 5 detik
   </script>
 </body>
 </html>
