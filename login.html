@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login Siswa - Riyadul Muna</title>
   <style>
     body {
@@ -43,11 +43,11 @@
 <body>
   <div class="login-box">
     <h2>Masuk Sebagai Siswa</h2>
-    <input type="text" id="nama" placeholder="Nama Lengkap" required>
-    <button onclick="login()">Masuk</button>
+    <input type="text" id="nama" placeholder="Nama Lengkap" required />
+    <button id="btnMasuk">Masuk</button>
   </div>
 
-  <!-- Supabase CDN -->
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/dist/umd/supabase.min.js"></script>
 
   <script>
@@ -56,18 +56,12 @@
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo"
     );
 
-    async function login() {
+    document.getElementById("btnMasuk").addEventListener("click", async () => {
       const nama = document.getElementById("nama").value.trim();
+      if (!nama) return alert("Nama wajib diisi!");
 
-      if (!nama) {
-        alert("Nama wajib diisi!");
-        return;
-      }
-
-      // Simpan ke localStorage
       localStorage.setItem("siswa_nama", nama);
 
-      // Simpan ke Supabase (tabel siswa)
       const { error } = await supabase
         .from("siswa")
         .insert([{ nama }]);
@@ -77,9 +71,8 @@
         return;
       }
 
-      // Lanjut ke halaman kuis
       window.location.href = "quiz.html";
-    }
+    });
   </script>
 </body>
 </html>
