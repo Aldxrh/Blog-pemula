@@ -2,53 +2,44 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <title>Hasil</title>
+  <title>Hasil Kuis</title>
   <style>
-    body { background: #111; color: #fff; text-align: center; padding: 50px; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      padding: 30px;
+      text-align: center;
+    }
+    .hasil {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
   </style>
 </head>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/dist/umd/supabase.min.js"></script>
-<script>
-  const supabaseUrl = 'https://uqwmxfrzzmkfjwbmdlmj.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd214ZnJ6em1rZmp3Ym1kbG1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTk3NzYsImV4cCI6MjA2MzE3NTc3Nn0.lrFdQlV0Oem6cF4zMQa5T4HfzVc3OsMZqKBdv3bZ5Fo';
-  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-</script>
 <body>
-  <h1>Hasil Kuis</h1>
-  <p id="output"></p>
+  <div class="hasil">
+    <h2>Hasil Kuis Anda</h2>
+    <p>Nama: <span id="nama"></span></p>
+    <p>Skor: <span id="skor"></span></p>
+    <button onclick="window.print()">Cetak Hasil</button>
+  </div>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const nama = params.get('nama');
-    const skor = localStorage.getItem('skor_' + nama);
-    document.getElementById('output').textContent = `${nama}, skor kamu: ${skor}`;
+    document.getElementById("nama").textContent = localStorage.getItem("siswa_nama");
+    document.getElementById("skor").textContent = localStorage.getItem("skor_akhir") + " dari 40 soal";
   </script>
-  <h2>Leaderboard</h2>
-<ul id="leaderboard"></ul>
-
-<script>
-  async function tampilkanLeaderboard() {
-    const { data, error } = await supabase
-      .from('hasil_kuis')
-      .select('*')
-      .order('skor', { ascending: false })
-      .limit(10);
-
-    const list = document.getElementById("leaderboard");
-    list.innerHTML = "";
-
-    if (data) {
-      data.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = `${item.nama}: ${item.skor} poin`;
-        list.appendChild(li);
-      });
-    } else {
-      list.innerHTML = "Gagal menampilkan leaderboard.";
-    }
-  }
-
-  tampilkanLeaderboard();
-</script>
 </body>
 </html>
